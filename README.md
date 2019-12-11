@@ -38,9 +38,9 @@ notice, you can do whatever you want with this stuff. If we
 meet someday, and you think this stuff is worth it, you can
 buy us a beer in return.
 ## Authors
-Sofia Leal - https://github.com/SofLeal - sofislealferreira@gmail.com
-Ana Flávia Notário -  flavia.notario@hotmail.com
-Igor Henrique Silva  - Igor.phnt@gmail
+* Sofia Leal - https://github.com/SofLeal - sofislealferreira@gmail.com
+* Ana Flávia Notário -  flavia.notario@hotmail.com
+* Igor Henrique Silva  - Igor.phnt@gmail
 
 
 
