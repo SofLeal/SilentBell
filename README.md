@@ -31,7 +31,7 @@ SilentBell tem como objetivo ser uma campainha acessível para pessoas com defic
 Sofia Leal and Igor Henrique wrote - based in some free stuff found on internet-  this code. As long as you retain this
 notice, you can do whatever you want with this stuff. If we
 meet someday, and you think this stuff is worth it, you can
-buy me a beer in return.
+buy us a beer in return.
 ## Authors
 Sofia Leal - https://github.com/SofLeal - sofislealferreira@gmail.com
 Ana Flávia Notário -  flavia.notario@hotmail.com
