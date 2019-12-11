@@ -40,7 +40,7 @@ buy us a beer in return.
 ## Authors
 * Sofia Leal - https://github.com/SofLeal - sofislealferreira@gmail.com
 * Ana Flávia Notário -  flavia.notario@hotmail.com
-* Igor Henrique Silva  - Igor.phnt@gmail
+* Igor Henrique Silva  - Igor.phnt@gmail.com
 
 
 
