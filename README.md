@@ -15,11 +15,11 @@ Then, in both codes in "Firmware" change:
 
 ### In this repository
 
-* Docs: Imagens, Guias, Referências.
+* Docs: Resume write in portuguese about the project.
 
 * Firmware: Arduino Codes.
 
-* Hardware: Hardware for PCB creation.
+* Images: Hardware for PCB creation.
 
 
 ## Development setup
