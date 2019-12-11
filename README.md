@@ -5,7 +5,7 @@ SilentBell tem como objetivo ser uma campainha acessível para pessoas com defic
 
 ### Read Me
 It's import to before commit those codes, make some changes:
-First, click [here](https://www.pushingbox.com/login.php) to create a login and follow a tutorial to create your propper scenario in PushingBox
+### First, click [here](https://www.pushingbox.com/login.php) to create a login and follow a tutorial to create your own scenario in PushingBox
 
 Then, in both codes in "Firmware" change:
 * In the `<#define DEVD1>` line, paste the DeviceID of your scenario. Make sure you enclose it in quotes as shown.
