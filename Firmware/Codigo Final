@@ -1,0 +1,174 @@
+#include <SPI.h>
+#include <Ethernet.h>
+#include "pitches.h"  //add note library
+const int rPin = 5;  //red LED
+const int gPin = 4;  //green LED
+const int bPin = 3;  //blue LED
+int ledState = 0;
+int ledOn = false;
+//note durations. 4=quarter note / 8=eighth note
+int noteDurations[]={4,9, 8, 8, 4, 4, 4, 4, 4};
+int melody[]={NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4};
+
+  /////////////////
+  
+ // MODIFY HERE //
+/////////////////
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+IPAddress ip(192,168,100,24); // Endereço IP que a Ethernet Shield terá. Deve ser alterado para um endereço livre da sua rede.
+EthernetServer server(80);    
+    // Cria um servidor WEB
+   // Be sure this address is unique in your network
+
+//Your secret DevID from PushingBox.com. You can use multiple DevID  on multiple Pin if you want
+char DEVID1[] = "v37A73A8BC40143F";        //Scenario : "The mailbox is open"
+
+//Numeric Pin where you connect your switch
+
+const int buttonPin = 12; // Example : the mailbox switch is connect to the Pin 12
+boolean buttonState = false;
+
+// Debug mode
+boolean DEBUG = true;
+  //////////////
+ //   End    //
+//////////////
+
+
+char serverName[] = "api.pushingbox.com";
+                // Save the last state of the Pin for DEVID1
+boolean lastConnected = false;                 // State of the connection last time through the main loop
+
+
+// Initialize the Ethernet client library
+// with the IP address and port of the server 
+// that you want to connect to (port 80 is default for HTTP):
+EthernetClient client;
+
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(buttonPin, INPUT);
+  pinMode(rPin, OUTPUT);
+  pinMode(gPin, OUTPUT);
+  pinMode(bPin, OUTPUT);
+  
+  // start the Ethernet connection:
+  if (Ethernet.begin(mac) == 0) {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // no point in carrying on, so do nothing forevermore:
+    while(true);
+  }
+  else{
+    Serial.println("Ethernet ready");
+    // print the Ethernet board/shield's IP address:
+    Serial.print("My IP address: ");
+    Serial.println(Ethernet.localIP());
+  }
+  // give the Ethernet shield a second to initialize:
+  delay(1000);
+}
+
+
+
+
+void loop() {
+   buttonState = digitalRead(buttonPin);
+      ////
+      // Listening for the pinDevid1 state
+      ////
+      if (buttonState == HIGH )// switch on pinDevid1 is ON 
+      {
+        if(DEBUG){Serial.println("pinDevid1 is HIGH");}
+       buttonState = true;
+        //Sending request to PushingBox when the pin is HIGH
+        sendToPushingBox(DEVID1);
+        buttonState = false;
+      }
+       if (buttonState == LOW ) // switch on pinDevid1 is OFF
+      {
+        if(DEBUG){Serial.println("pinDevid1 is LOW");}
+        buttonState = false;
+        //Sending request to PushingBox when the pin is LOW
+        //sendToPushingBox(DEVID1);    //Here you can run an other scenario by creating a DEVID2 variable
+      }
+
+      
+      
+      //DEBUG part
+      // this write the respons from PushingBox Server.
+      // You should see a "200 OK"
+      if (client.available()) {
+        char c = client.read();
+        if(DEBUG){Serial.print(c);}
+      }
+      
+      // if there's no net connection, but there was one last time
+      // through the loop, then stop the client:
+      if (!client.connected() && lastConnected) {
+        if(DEBUG){Serial.println();}
+        if(DEBUG){Serial.println("disconnecting.");}
+        client.stop();
+      }
+      lastConnected = client.connected();
+}
+
+
+//Function for sending the request to PushingBox
+void sendToPushingBox(char devid[]){
+  client.stop();
+  if(DEBUG){Serial.println("connecting...");}
+
+  if (client.connect(serverName, 80)) {
+    if(DEBUG){Serial.println("connected");}
+
+    if(DEBUG){Serial.println("sendind request");}
+    client.print("GET /pushingbox?devid=");
+    client.print(devid);
+    client.println(" HTTP/1.1");
+    client.print("Host: ");
+    client.println(serverName);
+    client.println("User-Agent: Arduino");
+    client.println();
+  } 
+  else {
+    if(DEBUG){Serial.println("connection failed");}
+  }
+int buttonState = digitalRead(buttonPin);
+ //if the button is pressed
+ if (buttonState == 1){
+   //iterate over the notes of the melody
+   for (int thisNote=0; thisNote <8; thisNote++){
+     // blink the three LEDs in sequence
+     if (thisNote%3==0){    
+       digitalWrite(rPin, HIGH);
+       digitalWrite(gPin, LOW);
+       digitalWrite(bPin, LOW);
+     }
+     else if (thisNote%3==1){    
+       digitalWrite(rPin, LOW);
+       digitalWrite(gPin, HIGH);
+       digitalWrite(bPin, LOW);
+     }
+     else if (thisNote%3==2){    
+       digitalWrite(rPin, LOW);
+       digitalWrite(gPin, LOW);
+       digitalWrite(bPin, HIGH);
+       
+       
+     }
+     //to calculate the note duration, take one second. Divided by the note type
+     int noteDuration = 1000 / noteDurations [thisNote];
+     tone(8, melody [thisNote], noteDuration);
+     //to distinguish the notes, set a minimum time between them
+     //the note's duration +30% seems to work well
+     int pauseBetweenNotes = noteDuration * 1.30;
+     delay(pauseBetweenNotes);
+     //stop the tone playing
+     noTone(8);
+     digitalWrite(rPin, LOW);
+     digitalWrite(gPin, LOW);
+     digitalWrite(bPin, LOW);
+   }
+ }
+}
