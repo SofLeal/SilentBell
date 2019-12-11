@@ -15,11 +15,11 @@ Then, in both codes in "Firmware" change:
 
 ### In this repository
 
-* Docs: Resume write in portuguese about the project.
+* [Docs](https://github.com/SofLeal/SilentBell/tree/master/Docs): Resume write in portuguese about the project.
 
-* Firmware: Arduino Codes.
+* [Firmware](https://github.com/SofLeal/SilentBell/tree/master/Firmware): Arduino Codes.
 
-* Images: Hardware for PCB creation.
+* [Images](https://github.com/SofLeal/SilentBell/blob/master/Images/index.jpg): Hardware for PCB creation.
 
 
 ## Development setup
