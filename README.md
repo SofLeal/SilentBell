@@ -26,7 +26,7 @@ Then, in both codes in "Firmware" change:
 
 * [PushingBox](https://www.pushingbox.com/) - server api used
 
-* Libraries - All the used custom libraries could be found here, if you didn't found someone please contact me.
+* Libraries - All the used custom libraries could be found here, if you didn't found something please contact me.
 
 * Arduino IDE version 1.8.9
 
